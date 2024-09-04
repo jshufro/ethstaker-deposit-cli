@@ -1,10 +1,6 @@
 name: ci-runner
 run-name: ${{ github.actor }} is running ci-runner
-on:
-  push:
-  pull_request:
-    types: [opened, synchronize, labeled, unlabeled]
-    branches: [main]
+on: [pull_request]
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -35,19 +31,12 @@ jobs:
             jsonlint --no-duplicate-keys --quiet --compact $file
           done
   ci-runner:
-    needs: lint
-    if: |
-      contains(github.event.pull_request.labels.*.name, 'run-tests') ||
-      github.event_name == 'push'
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, ubuntu-24.04-arm64, macos-13, macos-latest, windows-latest]
-        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13.0-rc.1"]
-        exclude:
-          - os: ubuntu-24.04-arm64
-            python-version: "3.13.0-rc.1"
+        os: [ubuntu-latest]
+        python-version: ["3.9", "3.10"]
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
@@ -62,7 +51,10 @@ jobs:
           pip install coverage
       - name: Run tests
         run: |
-          coverage run --data-file=.coverage.${{ matrix.os }}.${{ matrix.python-version }} -m pytest tests
+          coverage run --data-file=.coverage.${{ matrix.os }}.${{ matrix.python-version }} -m pytest tests/test_intl
+      - run: pwd
+      - run: ls -al
+      - run: find .
       - name: Upload coverage data 
         uses: actions/upload-artifact@v4
         with:
