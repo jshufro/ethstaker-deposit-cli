@@ -52,6 +52,9 @@ jobs:
       - name: Run tests
         run: |
           coverage run --data-file=.coverage.${{ matrix.os }}.${{ matrix.python-version }} -m pytest tests
+      - run: pwd
+      - run: ls -al
+      - run: find .
       - name: Upload coverage data 
         uses: actions/upload-artifact@v4
         with:
