@@ -69,6 +69,8 @@ jobs:
           name: coverage-${{ matrix.os }}-${{ matrix.python-version }}
           path: .coverage.${{ matrix.os }}.${{ matrix.python-version }}
           retention-days: 1
+          if-no-files-found: error
+          include-hidden-files: true
   coverage-combine:
     needs: ci-runner
     if: github.event_name == 'pull_request'
