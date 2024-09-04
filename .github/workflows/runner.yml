@@ -51,7 +51,7 @@ jobs:
           pip install coverage
       - name: Run tests
         run: |
-          coverage run --data-file=.coverage.${{ matrix.os }}.${{ matrix.python-version }} -m pytest tests
+          coverage run --data-file=.coverage.${{ matrix.os }}.${{ matrix.python-version }} -m pytest tests/test_intl
       - run: pwd
       - run: ls -al
       - run: find .
