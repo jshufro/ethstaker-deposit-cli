@@ -32,6 +32,7 @@ HOODI = 'hoodi'
 EPHEMERY = 'ephemery'
 GNOSIS = 'gnosis'
 CHIADO = 'chiado'
+PLATABERGET = 'plataberget'
 
 # Mainnet setting
 MainnetSetting = BaseChainSetting(
@@ -79,6 +80,12 @@ ChiadoSetting = BaseChainSetting(
     MULTIPLIER=32,
     MIN_ACTIVATION_AMOUNT=1,
     MIN_DEPOSIT_AMOUNT=0.03125)
+# Plataberget setting
+PlatabergetSetting = BaseChainSetting(
+    NETWORK_NAME=PLATABERGET,
+    GENESIS_FORK_VERSION=bytes.fromhex('10585557'),
+    EXIT_FORK_VERSION=bytes.fromhex('40585557'),
+    GENESIS_VALIDATORS_ROOT=bytes.fromhex('5c074f81fbc78dc7ba47460572a4286fffe989e9921abfd50791e01e4044d274'))
 
 
 ALL_CHAINS: dict[str, BaseChainSetting] = {
@@ -88,6 +95,7 @@ ALL_CHAINS: dict[str, BaseChainSetting] = {
     EPHEMERY: EphemerySetting,
     GNOSIS: GnosisSetting,
     CHIADO: ChiadoSetting,
+    PLATABERGET: PlatabergetSetting,
 }
 
 ALL_CHAIN_KEYS: tuple[str, ...] = tuple(ALL_CHAINS.keys())
